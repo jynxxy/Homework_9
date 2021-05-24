@@ -19,8 +19,31 @@ public class AlertTests extends TestBase{
         assertThat(getDriver().findElement(By.id("simple-alert-label")).getText(),
                 equalTo("OK button pressed"));
 
-
-
-
     }
+
+    @Test
+    public void promptAlertBoxTest() {
+        getDriver().get("https://seleniumui.moderntester.pl/alerts.php");
+        getDriver().findElement(By.id("prompt-alert")).click();
+        getDriver().switchTo().alert().sendKeys("Lord Vader");
+        getDriver().switchTo().alert().accept();
+
+        assertThat(getDriver().findElement(By.id("prompt-label")).getText(),
+                equalTo("Hello Lord Vader! How are you today?"));
+    }
+
+    @Test
+    public void confirmAlertBoxTest() {
+        getDriver().get("https://seleniumui.moderntester.pl/alerts.php");
+        getDriver().findElement(By.id("confirm-alert")).click();
+        getDriver().switchTo().alert().accept();
+        assertThat(getDriver().findElement(By.id("confirm-label")).getText(),
+                equalTo("You pressed OK!"));
+        getDriver().findElement(By.id("confirm-alert")).click();
+        getDriver().switchTo().alert().dismiss();
+        assertThat(getDriver().findElement(By.id("confirm-label")).getText(),
+                equalTo("You pressed Cancel!"));
+    }
+
+
 }
