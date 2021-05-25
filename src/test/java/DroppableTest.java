@@ -20,9 +20,43 @@ public class DroppableTest extends TestBase {
         actions.dragAndDrop(drag, drop).perform();
 
         // ta sama metoda rozpisana na pomniejsze metody:
-        actions.clickAndHold(drag).moveToElement(drop).release().perform();
+//        actions.clickAndHold(drag).moveToElement(drop).release().perform();
 
         assertThat(drop.getText(), equalTo("Dropped!"));
+    }
 
+    @Test
+    public void shouldDragAndDropAlternative() {
+        getDriver().get("https://seleniumui.moderntester.pl/droppable.php");
+
+        WebElement drag = getDriver().findElement(By.id("draggable"));
+        WebElement drop = getDriver().findElement(By.id("droppable"));
+
+        Actions actions = new Actions(getDriver());
+
+        actions.clickAndHold(drag)
+                .moveToElement(drop)
+                .release()
+                .perform();
+
+        assertThat(drop.getText(), equalTo("Dropped!"));
+    }
+
+    @Test
+    public void shouldDragAndDropUsingXAndYValues() {
+        getDriver().get("https://seleniumui.moderntester.pl/droppable.php");
+
+        WebElement drag = getDriver().findElement(By.id("draggable"));
+        WebElement drop = getDriver().findElement(By.id("droppable"));
+        WebElement message = getDriver().findElement(By.cssSelector("#droppable p"));
+
+        Actions actions = new Actions(getDriver());
+
+        int dragXValue = drag.getLocation().getX();
+        int dropXValue = drop.getLocation().getX();
+        int xValueDifference = dropXValue - dragXValue;
+        actions.dragAndDropBy(drag, xValueDifference, 0).build().perform();
+
+        assertThat(message.getText(), equalTo("Dropped!"));
     }
 }
