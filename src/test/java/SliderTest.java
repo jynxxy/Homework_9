@@ -37,6 +37,5 @@ public class SliderTest extends TestBase{
     private int getSliderValue() {
         String sliderValue = getDriver().findElement(By.id("custom-handle")).getText();
         return Integer.parseInt(sliderValue);
-
     }
 }
