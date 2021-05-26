@@ -81,5 +81,4 @@ public class FormTest extends TestBase {
         logger.debug("Message: " + msg.getText());
         assertThat(msg.getText(), equalTo("Form send with success"));
     }
-
 }
